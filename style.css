@@ -1,0 +1,262 @@
+/* ===========================
+   Общие настройки
+   =========================== */
+:root{
+  --bg:#121010;            /* фон страницы (почти чёрный) */
+  --panel:#1e1c1c;         /* фон карточек / панелей */
+  --panel-2:#1c1a1a;       /* второй тон для header/footer */
+  --accent:#a40014;        /* насыщенный красный акцент */
+  --warm:#d9b28c;          /* тёплый бежевый для описаний */
+  --text:#f5f5f5;          /* основной светлый текст */
+  --muted:#aaaaaa;         /* второстепенный текст */
+  --logo-bg:#ffffff;       /* фон области под логотип */
+}
+
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.4;
+}
+
+.header {
+  width: 100%;
+  height: 200px; /* можно регулировать под твой логотип */
+  border-bottom: 2px solid rgba(200, 40, 40, 0.6); /* тёмно-красная, полупрозрачная */
+  background: #000;
+  overflow: hidden; /* чтобы логотип не вылезал */
+}
+
+.logo-full {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* или cover */
+  display: block;
+}
+
+
+
+
+/* Адаптив: на узких экранах логотип сверху, текст снизу центр */
+@media (max-width: 760px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 18px 16px;
+  }
+
+  /* Квадрат под логотип */
+.logo {
+  flex: 0 0 180px;   /* шире (было 120px) */
+  height: 120px;     /* высота оставляем прежней */
+  background: #2b2626;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* картинка впишется без искажений */
+}
+
+
+
+
+  .header-text {
+  flex: 1;
+  text-align: center;
+  color: var(--text);
+  margin-left: -180px; /* под новое значение ширины логотипа */
+}
+
+}
+
+/* ===========================
+   Секции / Категории
+   =========================== */
+main {
+  padding: 28px 20px 60px;
+}
+
+/* Заголовок категории */
+.category {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  font-size: 1.6rem;
+  color: var(--text);
+  margin: 0 0 18px;
+  display: inline-block;
+  padding-left: 12px;
+  border-left: 6px solid var(--accent);
+  line-height: 1;
+}
+
+/* ===========================
+   Слайдер (горизонтальный)
+   =========================== */
+.slider-container {
+  position: relative;
+  /* отступы по бокам резервируют место под стрелки */
+  padding: 0 64px;
+}
+
+.slider {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  /* делаем, чтобы карточки начинали с левого края визуально */
+  padding-left: 6px;
+}
+
+/* прячем скроллбар (в большинстве браузеров) */
+.slider::-webkit-scrollbar { height: 8px; display: none; }
+.slider { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* карточки товара — ровные прямоугольники */
+.product {
+  flex: 0 0 270px;      /* фиксированная ширина карточки */
+  height: 360px;        /* фиксированная высота для аккуратной сетки */
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  transition: transform .18s ease, border-color .18s ease;
+}
+
+/* немного больше масштаба при наведении */
+.product:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(164,0,20,0.95);
+}
+
+/* место под фото — ровный прямоугольник */
+.product-image {
+  background-color: #2b2626;
+  height: 190px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Название, описание, цена выровнены по блокам */
+.product h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.product p {
+  margin: 0 0 14px 0;
+  color: var(--warm);
+  font-size: 0.95rem;
+  flex: 0 0 auto;
+}
+
+/* цена внизу карточки всегда видна */
+/* ===== Цена товара ===== */
+.price {
+  margin-top: auto;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text);     /* теперь белая */
+  text-align: left;
+  transition: color .18s ease;
+}
+
+/* при наведении на карточку цена слегка подсвечивается красным */
+.product:hover .price {
+  color: var(--accent);
+}
+
+
+/* ===========================
+   Кнопки-слайдеры (стрелки)
+   =========================== */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* круглые */
+  z-index: 5;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  transition: transform .15s ease, background .15s ease;
+  opacity: 0.95;
+}
+
+.slider-btn.prev { left: -12px; }  /* вынес за пределы слайдера */
+.slider-btn.next { right: -12px; } /* тоже вынес за пределы */
+
+.slider-btn:hover {
+  background: #8f0011;
+  transform: translateY(-50%) scale(1.06);
+}
+
+
+
+/* мобильные */
+@media (max-width: 760px) {
+  .slider-container { padding: 0 6px; }
+  .slider { padding: 0 18px; }
+  .slider-btn { display: none; }
+  .product { flex: 0 0 82%; height: auto; }
+  .product-image { height: 46vw; }
+  .price { text-align: left; }
+}
+
+/* ===========================
+   Footer — центрируем и отделяем
+   =========================== */
+footer {
+  background-color: var(--panel-2);
+  color: var(--text);
+  padding: 18px 20px;
+  margin-top: 40px;
+  border-top: 2px solid var(--accent);
+  font-size: 0.95rem;
+
+  display: flex;
+  justify-content: center; /* по центру */
+  align-items: center;     /* ровно по вертикали */
+  text-align: center;      /* на всякий случай */
+}
+
+
